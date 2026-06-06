@@ -1,12 +1,14 @@
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
-  BadgeCheck,
   BarChart3,
   BrainCircuit,
   BriefcaseBusiness,
   Building2,
   CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   ExternalLink,
   Layers3,
@@ -28,6 +30,7 @@ const fadeUp = {
 const navItems = ['About', 'Journey', 'Projects', 'Skills', 'Vision', 'Contact']
 
 const githubUrl = 'https://github.com/juliochrist?tab=repositories'
+const linkedinUrl = 'https://www.linkedin.com/in/juliochrist2069/'
 const avatarUrl = '/avatar/julio-christianto.jpg'
 
 const timeline = [
@@ -86,6 +89,19 @@ const projects = [
     githubUrl: 'https://github.com/juliochrist/smartpos-ai',
   },
   {
+    name: 'ClientPulse',
+    tagline: 'Smart CRM for Sales Teams',
+    problem: 'Small teams lose customer context, follow-ups, and pipeline visibility across scattered tools.',
+    solution: 'A focused CRM dashboard for customers, leads, tasks, revenue pipeline, and AI-powered next actions.',
+    tech: ['React', 'TypeScript', 'CRM UI', 'AI Forecasting'],
+    color: 'from-indigo-500/35 via-blue-500/12 to-slate-950',
+    icon: BriefcaseBusiness,
+    image: '/project-screenshots/clientpulse.png',
+    imageTone: 'dark',
+    demoUrl: 'https://client-pulse-xi.vercel.app/',
+    githubUrl: 'https://github.com/juliochrist/ClientPulse',
+  },
+  {
     name: 'Life OS',
     tagline: 'Personal Operating System',
     problem: 'People manage tasks, notes, finances, and goals across multiple apps.',
@@ -118,7 +134,50 @@ const skillGroups = [
   },
 ]
 
+function getProjectVisibleCount() {
+  if (typeof window === 'undefined') {
+    return 3
+  }
+
+  if (window.innerWidth >= 1024) {
+    return 3
+  }
+
+  if (window.innerWidth >= 768) {
+    return 2
+  }
+
+  return 1
+}
+
 function App() {
+  const [projectIndex, setProjectIndex] = useState(0)
+  const [projectVisibleCount, setProjectVisibleCount] = useState(getProjectVisibleCount)
+  const maxProjectIndex = Math.max(projects.length - projectVisibleCount, 0)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setProjectVisibleCount(getProjectVisibleCount())
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
+    setProjectIndex((current) => Math.min(current, maxProjectIndex))
+  }, [maxProjectIndex])
+
+  const showPreviousProject = () => {
+    setProjectIndex((current) => (current === 0 ? maxProjectIndex : current - 1))
+  }
+
+  const showNextProject = () => {
+    setProjectIndex((current) => (current === maxProjectIndex ? 0 : current + 1))
+  }
+
   return (
     <main className="min-h-screen bg-[#0B0F17] text-[#E5E7EB]">
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0B0F17]/70 backdrop-blur-2xl">
@@ -162,9 +221,9 @@ function App() {
 
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} transition={{ duration: 0.7, ease: 'easeOut' }}>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/10 px-4 py-2 text-sm text-blue-100">
-              <BadgeCheck className="size-4 text-blue-300" />
-              Apple Developer Academy Applicant
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-400/20 bg-blue-400/10 px-4 py-2 text-sm text-blue-100">
+              <Sparkles className="size-4 text-blue-300" />
+              Business-First AI Product Builder
             </div>
             <h1 className="max-w-5xl text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-white sm:text-4xl lg:text-5xl">
               Building AI-Powered Products That Solve Real Problems
@@ -309,85 +368,49 @@ function App() {
       </Section>
 
       <Section id="projects" eyebrow="Featured Projects" title="Product concepts with real business problems at the center">
-        <div className="grid gap-5 lg:grid-cols-3">
-          {projects.map((project, index) => {
-            const Icon = project.icon
-            return (
-              <motion.article
-                key={project.name}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-80px' }}
-                variants={fadeUp}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -10, scale: 1.018 }}
-                className="group overflow-hidden rounded-3xl border border-[#1F2937] bg-[#111827]/85 shadow-2xl shadow-black/20 transition-colors duration-300 hover:border-blue-300/45 hover:bg-[#111827] hover:shadow-blue-950/30"
-              >
-                <div className={`h-56 bg-gradient-to-br ${project.color} p-4`}>
-                  <div
-                    className={`relative h-full overflow-hidden rounded-2xl border shadow-2xl ${
-                      project.imageTone === 'light'
-                        ? 'border-white/70 bg-white/80 shadow-emerald-950/20'
-                        : 'border-white/10 bg-black/30 shadow-black/40'
-                    }`}
-                  >
-                    <img
-                      src={project.image}
-                      alt={`${project.name} product screenshot`}
-                      className="h-full w-full object-cover object-left-top transition duration-700 group-hover:scale-105"
-                    />
-                    <div
-                      className={`absolute inset-x-0 top-0 flex items-center justify-between p-3 ${
-                        project.imageTone === 'light'
-                          ? 'bg-gradient-to-b from-white/85 to-transparent text-slate-800'
-                          : 'bg-gradient-to-b from-black/75 to-transparent text-white'
-                      }`}
-                    >
-                      <span className="rounded-full border border-current/15 bg-current/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]">
-                        Product UI
-                      </span>
-                      <span className="grid size-9 place-items-center rounded-xl border border-current/15 bg-current/[0.06] transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
-                        <Icon className="size-4" />
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-sm font-medium text-blue-300">{project.tagline}</p>
-                  <h3 className="mt-2 text-lg font-semibold text-white">{project.name}</h3>
-                  <div className="mt-5 space-y-4">
-                    <CaseLabel label="Problem" value={project.problem} />
-                    <CaseLabel label="Solution" value={project.solution} />
-                  </div>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <span key={tech} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-[#E5E7EB]">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="mt-6 grid grid-cols-2 gap-3">
-                    <a
-                      href={project.demoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-[#0B0F17] transition hover:-translate-y-0.5 hover:bg-blue-100"
-                    >
-                      Live Demo <ExternalLink className="size-4" />
-                    </a>
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.06]"
-                    >
-                      GitHub <Code2 className="size-4" />
-                    </a>
-                  </div>
-                </div>
-              </motion.article>
-            )
-          })}
+        <div className="mb-5 flex items-center justify-end gap-3">
+          <motion.button
+            type="button"
+            onClick={showPreviousProject}
+            aria-label="Show previous project"
+            whileTap={{ scale: 0.94 }}
+            className="grid size-11 place-items-center rounded-full border border-white/15 bg-white/[0.04] text-white transition hover:-translate-y-0.5 hover:border-blue-300/45 hover:bg-white/[0.08]"
+          >
+            <ChevronLeft className="size-5" />
+          </motion.button>
+          <motion.button
+            type="button"
+            onClick={showNextProject}
+            aria-label="Show next project"
+            whileTap={{ scale: 0.94 }}
+            className="grid size-11 place-items-center rounded-full border border-white/15 bg-white/[0.04] text-white transition hover:-translate-y-0.5 hover:border-blue-300/45 hover:bg-white/[0.08]"
+          >
+            <ChevronRight className="size-5" />
+          </motion.button>
+        </div>
+        <div className="overflow-hidden [--card-basis:100%] [--card-step:calc(100%_+_1.25rem)] md:[--card-basis:calc((100%_-_1.25rem)/2)] md:[--card-step:calc(((100%_-_1.25rem)/2)_+_1.25rem)] lg:[--card-basis:calc((100%_-_2.5rem)/3)] lg:[--card-step:calc(((100%_-_2.5rem)/3)_+_1.25rem)]">
+          <motion.div
+            animate={{ x: `calc(${projectIndex} * var(--card-step) * -1)` }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex gap-5"
+          >
+            {projects.map((project) => (
+              <ProjectCard key={project.name} project={project} />
+            ))}
+          </motion.div>
+        </div>
+        <div className="mt-6 flex justify-center gap-2">
+          {Array.from({ length: maxProjectIndex + 1 }, (_, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => setProjectIndex(index)}
+              aria-label={`Show project slide ${index + 1}`}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                projectIndex === index ? 'w-8 bg-[#3B82F6]' : 'w-2.5 bg-white/20 hover:bg-white/40'
+              }`}
+            />
+          ))}
         </div>
       </Section>
 
@@ -458,7 +481,7 @@ function App() {
             <ContactLink href="mailto:juliochristianto@gmail.com" icon={Mail} label="Email" value="juliochristianto@gmail.com" />
             <ContactLink href="tel:+6281321202069" icon={Phone} label="Phone" value="+62 813 2120 2069" />
             <ContactLink href={githubUrl} icon={Share2} label="GitHub" value="github.com/juliochrist" />
-            <ContactLink href="#" icon={Network} label="LinkedIn" value="Add profile link" />
+            <ContactLink href={linkedinUrl} icon={Network} label="LinkedIn" value="linkedin.com/in/juliochrist2069" />
           </div>
         </div>
       </Section>
@@ -513,6 +536,81 @@ function GlassPanel({ children }: { children: React.ReactNode }) {
     >
       {children}
     </motion.div>
+  )
+}
+
+function ProjectCard({ project }: { project: (typeof projects)[number] }) {
+  const Icon = project.icon
+
+  return (
+    <motion.article
+      whileHover={{ y: -6, scale: 1.01 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+      className="group min-w-[var(--card-basis)] overflow-hidden rounded-3xl border border-[#1F2937] bg-[#111827]/85 shadow-2xl shadow-black/20 transition-colors duration-300 hover:border-blue-300/45 hover:bg-[#111827] hover:shadow-blue-950/30"
+    >
+      <div className={`h-56 bg-gradient-to-br ${project.color} p-4`}>
+        <div
+          className={`relative h-full overflow-hidden rounded-2xl border shadow-2xl ${
+            project.imageTone === 'light'
+              ? 'border-white/70 bg-white/80 shadow-emerald-950/20'
+              : 'border-white/10 bg-black/30 shadow-black/40'
+          }`}
+        >
+          <img
+            src={project.image}
+            alt={`${project.name} product screenshot`}
+            className="h-full w-full object-cover object-left-top transition duration-700 ease-out group-hover:scale-105"
+          />
+          <div
+            className={`absolute inset-x-0 top-0 flex items-center justify-between p-3 ${
+              project.imageTone === 'light'
+                ? 'bg-gradient-to-b from-white/85 to-transparent text-slate-800'
+                : 'bg-gradient-to-b from-black/75 to-transparent text-white'
+            }`}
+          >
+            <span className="rounded-full border border-current/15 bg-current/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]">
+              Product UI
+            </span>
+            <span className="grid size-9 place-items-center rounded-xl border border-current/15 bg-current/[0.06] transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
+              <Icon className="size-4" />
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="p-6">
+        <p className="text-sm font-medium text-blue-300">{project.tagline}</p>
+        <h3 className="mt-2 text-lg font-semibold text-white">{project.name}</h3>
+        <div className="mt-5 space-y-4">
+          <CaseLabel label="Problem" value={project.problem} />
+          <CaseLabel label="Solution" value={project.solution} />
+        </div>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.tech.map((tech) => (
+            <span key={tech} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-[#E5E7EB]">
+              {tech}
+            </span>
+          ))}
+        </div>
+        <div className="mt-6 grid grid-cols-2 gap-3">
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-[#0B0F17] transition hover:-translate-y-0.5 hover:bg-blue-100"
+          >
+            Live Demo <ExternalLink className="size-4" />
+          </a>
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/[0.06]"
+          >
+            GitHub <Code2 className="size-4" />
+          </a>
+        </div>
+      </div>
+    </motion.article>
   )
 }
 
