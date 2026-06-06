@@ -70,7 +70,7 @@ const projects = [
     image: '/project-screenshots/tradeintel.png',
     imageTone: 'dark',
     demoUrl: 'https://tradeintel-v2.vercel.app',
-    githubUrl,
+    githubUrl: 'https://github.com/juliochrist/tradeintel-v2',
   },
   {
     name: 'SmartPOS AI',
@@ -83,7 +83,7 @@ const projects = [
     image: '/project-screenshots/smartpos-ai.png',
     imageTone: 'dark',
     demoUrl: 'https://smartpos-ai-seven.vercel.app',
-    githubUrl,
+    githubUrl: 'https://github.com/juliochrist/smartpos-ai',
   },
   {
     name: 'Life OS',
@@ -96,7 +96,7 @@ const projects = [
     image: '/project-screenshots/life-os.png',
     imageTone: 'light',
     demoUrl: 'https://life-os-beta-mocha.vercel.app',
-    githubUrl,
+    githubUrl: 'https://github.com/juliochrist/life-os',
   },
 ]
 
