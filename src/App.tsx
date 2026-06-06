@@ -166,10 +166,10 @@ function App() {
               <BadgeCheck className="size-4 text-blue-300" />
               Apple Developer Academy Applicant
             </div>
-            <h1 className="max-w-5xl text-balance text-4xl font-semibold leading-[1.06] tracking-normal text-white sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-5xl text-balance text-3xl font-semibold leading-[1.08] tracking-normal text-white sm:text-4xl lg:text-5xl">
               Building AI-Powered Products That Solve Real Problems
             </h1>
-            <p className="mt-7 max-w-3xl text-base leading-7 text-[#9CA3AF] sm:text-lg">
+            <p className="mt-6 max-w-3xl text-sm leading-6 text-[#9CA3AF] sm:text-base sm:leading-7">
               I am a self-taught developer with over 8 years of experience in sales, purchasing, and business
               operations. I am currently learning modern web development and building AI-powered products focused on
               business intelligence, productivity, and decision-making.
@@ -209,7 +209,7 @@ function App() {
                     </div>
                     <div>
                     <p className="text-sm text-[#9CA3AF]">Product Builder Profile</p>
-                    <h2 className="mt-1 text-xl font-semibold text-white">Julio Christianto</h2>
+                    <h2 className="mt-1 text-lg font-semibold text-white">Julio Christianto</h2>
                     </div>
                   </div>
                   <div className="grid size-12 place-items-center rounded-2xl bg-blue-500/15 text-blue-200">
@@ -228,7 +228,7 @@ function App() {
                       transition={{ type: 'spring', stiffness: 320, damping: 24 }}
                       className="rounded-2xl border border-white/10 bg-[#0B0F17]/80 p-4 transition-colors hover:border-blue-300/35 hover:bg-white/[0.04]"
                     >
-                      <p className="text-xl font-semibold text-white">{value}</p>
+                      <p className="text-lg font-semibold text-white">{value}</p>
                       <p className="mt-1 text-sm text-[#9CA3AF]">{label}</p>
                     </motion.div>
                   ))}
@@ -248,12 +248,12 @@ function App() {
       <Section id="about" eyebrow="About Me" title="From business operations to technology products">
         <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
           <GlassPanel>
-            <p className="text-base leading-7 text-[#E5E7EB]">
+            <p className="text-sm leading-6 text-[#E5E7EB] sm:text-base sm:leading-7">
               Julio Christianto is building a bridge between real-world business experience and modern software
               creation. After more than 8 years across sales, purchasing, and business operations, his transition into
               technology comes from a clear desire: solve practical problems through software.
             </p>
-            <p className="mt-5 leading-7 text-[#9CA3AF]">
+            <p className="mt-5 text-sm leading-6 text-[#9CA3AF] sm:text-base sm:leading-7">
               His learning path includes the Meta Front-End Developer Certificate on Coursera and a hands-on focus on
               React, TypeScript, JavaScript, Tailwind CSS, Vite, and AI-assisted development.
             </p>
@@ -354,7 +354,7 @@ function App() {
                 </div>
                 <div className="p-6">
                   <p className="text-sm font-medium text-blue-300">{project.tagline}</p>
-                  <h3 className="mt-2 text-xl font-semibold text-white">{project.name}</h3>
+                  <h3 className="mt-2 text-lg font-semibold text-white">{project.name}</h3>
                   <div className="mt-5 space-y-4">
                     <CaseLabel label="Problem" value={project.problem} />
                     <CaseLabel label="Solution" value={project.solution} />
@@ -401,7 +401,7 @@ function App() {
                   <div className="grid size-11 place-items-center rounded-xl bg-[#3B82F6]/15 text-blue-200">
                     <Icon className="size-5" />
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{group.title}</h3>
+                  <h3 className="text-base font-semibold text-white">{group.title}</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {group.skills.map((skill) => (
@@ -418,7 +418,7 @@ function App() {
 
       <Section id="vision" eyebrow="Vision" title="Why I Build">
         <div className="rounded-[2rem] border border-blue-400/20 bg-[linear-gradient(135deg,rgba(59,130,246,0.16),rgba(139,92,246,0.13),rgba(17,24,39,0.85))] p-6 shadow-2xl shadow-blue-950/30 sm:p-10">
-          <p className="max-w-4xl text-xl font-medium leading-snug text-white sm:text-2xl">
+          <p className="max-w-4xl text-lg font-medium leading-snug text-white sm:text-xl">
             My long-term goal is to create technology products that help individuals and small businesses make better
             decisions through data and artificial intelligence.
           </p>
@@ -448,9 +448,9 @@ function App() {
                   className="h-full w-full object-cover object-[50%_32%]"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-white">Julio Christianto</h3>
+              <h3 className="text-lg font-semibold text-white">Julio Christianto</h3>
             </div>
-            <p className="mt-3 leading-7 text-[#9CA3AF]">
+            <p className="mt-3 text-sm leading-6 text-[#9CA3AF] sm:text-base sm:leading-7">
               Future product builder focused on AI-powered business intelligence, productivity, and decision-making.
             </p>
           </GlassPanel>
@@ -496,7 +496,7 @@ function Section({
           className="mb-9 max-w-3xl"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-300">{eyebrow}</p>
-          <h2 className="mt-3 text-2xl font-semibold leading-tight text-white sm:text-3xl lg:text-4xl">{title}</h2>
+          <h2 className="mt-3 text-xl font-semibold leading-tight text-white sm:text-2xl lg:text-3xl">{title}</h2>
         </motion.div>
         {children}
       </div>
