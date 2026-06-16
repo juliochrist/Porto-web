@@ -102,6 +102,19 @@ const projects = [
     githubUrl: 'https://github.com/juliochrist/ClientPulse',
   },
   {
+    name: 'Frontend Playground',
+    tagline: 'Julio UI Kit Lab',
+    problem: 'Reusable frontend patterns can become inconsistent when every product is designed from scratch.',
+    solution: 'A component playground for dashboards, charts, forms, tables, layouts, animations, and shared UI patterns.',
+    tech: ['Next.js', 'React', 'TypeScript', 'Design System'],
+    color: 'from-violet-500/35 via-blue-500/12 to-slate-950',
+    icon: Layers3,
+    image: '/project-screenshots/frontend-playground.png',
+    imageTone: 'dark',
+    demoUrl: 'https://fe-playground-nextjs.vercel.app',
+    githubUrl: 'https://github.com/juliochrist/FE-Playground-nextjs',
+  },
+  {
     name: 'Life OS',
     tagline: 'Personal Operating System',
     problem: 'People manage tasks, notes, finances, and goals across multiple apps.',
@@ -178,8 +191,25 @@ function App() {
     setProjectIndex((current) => (current === maxProjectIndex ? 0 : current + 1))
   }
 
+  const handleProjectDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: { offset: { x: number }; velocity: { x: number } }) => {
+    const swipeDistance = info.offset.x
+    const swipeVelocity = info.velocity.x
+
+    if (swipeDistance < -70 || swipeVelocity < -500) {
+      showNextProject()
+    }
+
+    if (swipeDistance > 70 || swipeVelocity > 500) {
+      showPreviousProject()
+    }
+  }
+
   return (
-    <main className="min-h-screen bg-[#0B0F17] text-[#E5E7EB]">
+    <main className="relative isolate min-h-screen overflow-hidden bg-[#0B0F17] text-[#E5E7EB]">
+      <div className="portfolio-background" aria-hidden="true">
+        <div className="portfolio-background__grid" />
+        <div className="portfolio-background__sheen" />
+      </div>
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0B0F17]/70 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
           <a href="#hero" className="group flex items-center gap-3">
@@ -390,9 +420,13 @@ function App() {
         </div>
         <div className="overflow-hidden [--card-basis:100%] [--card-step:calc(100%_+_1.25rem)] md:[--card-basis:calc((100%_-_1.25rem)/2)] md:[--card-step:calc(((100%_-_1.25rem)/2)_+_1.25rem)] lg:[--card-basis:calc((100%_-_2.5rem)/3)] lg:[--card-step:calc(((100%_-_2.5rem)/3)_+_1.25rem)]">
           <motion.div
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.08}
+            onDragEnd={handleProjectDragEnd}
             animate={{ x: `calc(${projectIndex} * var(--card-step) * -1)` }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex gap-5"
+            className="flex cursor-grab gap-5 active:cursor-grabbing"
           >
             {projects.map((project) => (
               <ProjectCard key={project.name} project={project} />

@@ -32,6 +32,64 @@ body {
     #0b0f17;
 }
 
+.portfolio-background {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.portfolio-background__grid {
+  position: absolute;
+  inset: -20%;
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
+  background-size: 76px 76px;
+  mask-image: linear-gradient(to bottom, transparent, black 16%, black 72%, transparent);
+  opacity: 0.3;
+  transform: rotate(-6deg);
+  animation: portfolio-grid-drift 26s linear infinite;
+}
+
+.portfolio-background__sheen {
+  position: absolute;
+  inset: -35%;
+  background:
+    linear-gradient(115deg, transparent 30%, rgba(59, 130, 246, 0.1), transparent 48%),
+    linear-gradient(290deg, transparent 38%, rgba(20, 184, 166, 0.08), transparent 58%);
+  opacity: 0.8;
+  animation: portfolio-sheen-drift 18s ease-in-out infinite alternate;
+}
+
+@keyframes portfolio-grid-drift {
+  from {
+    background-position: 0 0, 0 0;
+  }
+
+  to {
+    background-position: 152px 76px, 152px 76px;
+  }
+}
+
+@keyframes portfolio-sheen-drift {
+  from {
+    transform: translate3d(-4%, -2%, 0) rotate(0deg);
+  }
+
+  to {
+    transform: translate3d(4%, 3%, 0) rotate(2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-background__grid,
+  .portfolio-background__sheen {
+    animation: none;
+  }
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
