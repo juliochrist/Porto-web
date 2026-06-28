@@ -72,6 +72,7 @@ const projects = [
     icon: TrendingUp,
     image: '/project-screenshots/tradeintel.png',
     imageTone: 'dark',
+    status: 'Prototype',
     demoUrl: 'https://tradeintel-v2.vercel.app',
     githubUrl: 'https://github.com/juliochrist/tradeintel-v2',
   },
@@ -85,6 +86,7 @@ const projects = [
     icon: Building2,
     image: '/project-screenshots/smartpos-ai.png',
     imageTone: 'dark',
+    status: 'Prototype',
     demoUrl: 'https://smartpos-ai-seven.vercel.app',
     githubUrl: 'https://github.com/juliochrist/smartpos-ai',
   },
@@ -98,6 +100,7 @@ const projects = [
     icon: BriefcaseBusiness,
     image: '/project-screenshots/clientpulse.png',
     imageTone: 'dark',
+    status: 'Prototype',
     demoUrl: 'https://client-pulse-xi.vercel.app/',
     githubUrl: 'https://github.com/juliochrist/ClientPulse',
   },
@@ -111,6 +114,7 @@ const projects = [
     icon: Layers3,
     image: '/project-screenshots/frontend-playground.png',
     imageTone: 'dark',
+    status: 'Design System',
     demoUrl: 'https://fe-playground-nextjs.vercel.app',
     githubUrl: 'https://github.com/juliochrist/FE-Playground-nextjs',
   },
@@ -124,8 +128,32 @@ const projects = [
     icon: Target,
     image: '/project-screenshots/life-os.png',
     imageTone: 'light',
+    status: 'Prototype',
     demoUrl: 'https://life-os-beta-mocha.vercel.app',
     githubUrl: 'https://github.com/juliochrist/life-os',
+  },
+]
+
+const nowBuilding = [
+  {
+    title: 'AI Product Development',
+    text: 'Exploring how AI can turn business data, journals, and daily workflows into better decisions.',
+    icon: BrainCircuit,
+  },
+  {
+    title: 'Next.js & Product Architecture',
+    text: 'Strengthening full-stack patterns for faster launches, cleaner routing, and production-ready apps.',
+    icon: Layers3,
+  },
+  {
+    title: 'Reusable UI Systems',
+    text: 'Building shared components and dashboard patterns through Frontend Playground and Julio UI Kit Lab.',
+    icon: Sparkles,
+  },
+  {
+    title: 'Business Intelligence Tools',
+    text: 'Connecting sales, operations, CRM, and personal productivity experience into practical software products.',
+    icon: BarChart3,
   },
 ]
 
@@ -133,7 +161,7 @@ const skillGroups = [
   {
     title: 'Frontend',
     icon: Code2,
-    skills: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Tailwind CSS', 'Vite'],
+    skills: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Tailwind CSS', 'Vite'],
   },
   {
     title: 'Tools',
@@ -308,7 +336,7 @@ function App() {
                 <div className="grid gap-3">
                   {[
                     ['8+ years', 'Sales, purchasing, operations'],
-                    ['3 concepts', 'AI product portfolio'],
+                    ['5 builds', 'AI product portfolio'],
                     ['Founder path', 'Business-first technology mindset'],
                   ].map(([value, label]) => (
                     <motion.div
@@ -391,6 +419,32 @@ function App() {
                 <p className="text-sm text-[#9CA3AF]">0{index + 1}</p>
                 <h3 className="mt-2 text-base font-semibold text-white">{step.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#9CA3AF]">{step.text}</p>
+              </motion.div>
+            )
+          })}
+        </div>
+      </Section>
+
+      <Section id="now-building" eyebrow="Now Building" title="What I am learning and shipping next">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {nowBuilding.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <motion.div
+                key={item.title}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-80px' }}
+                variants={fadeUp}
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                whileHover={{ y: -6, scale: 1.012 }}
+                className="rounded-3xl border border-[#1F2937] bg-[#111827]/80 p-5 shadow-2xl shadow-black/20 transition-colors hover:border-blue-300/40 hover:bg-white/[0.045]"
+              >
+                <div className="mb-5 grid size-11 place-items-center rounded-xl bg-[#3B82F6]/15 text-blue-200">
+                  <Icon className="size-5" />
+                </div>
+                <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#9CA3AF]">{item.text}</p>
               </motion.div>
             )
           })}
@@ -602,9 +656,14 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
                 : 'bg-gradient-to-b from-black/75 to-transparent text-white'
             }`}
           >
-            <span className="rounded-full border border-current/15 bg-current/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]">
-              Product UI
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full border border-current/15 bg-current/[0.06] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em]">
+                Product UI
+              </span>
+              <span className="rounded-full border border-blue-300/25 bg-blue-400/15 px-3 py-1 text-xs font-semibold text-blue-100">
+                {project.status}
+              </span>
+            </div>
             <span className="grid size-9 place-items-center rounded-xl border border-current/15 bg-current/[0.06] transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110">
               <Icon className="size-4" />
             </span>
